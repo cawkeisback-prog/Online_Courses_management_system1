@@ -1,0 +1,117 @@
+
+{% extends 'courses/base.html' %}
+
+{% block title %}Enrolled Students | Online Course Management{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <!-- Page Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold">Enrolled Students</h2>
+            <p class="text-muted mb-0">
+                View all students enrolled in courses.
+            </p>
+        </div>
+
+        <a href="{% url 'enrollment_create' %}" class="btn btn-primary">
+            <i class="bi bi-plus-circle me-2"></i>
+            New Enrollment
+        </a>
+    </div>
+
+    <!-- Total Enrollments -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                    <div class="text-muted">Total Enrollments</div>
+                    <h3 class="fw-bold mb-0">
+                        {{ enrollments|length }}
+                    </h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Enrolled Students Table -->
+    <div class="card border-0 shadow-sm">
+        <div class="card-body">
+
+            <h5 class="fw-bold mb-3">Enrollment Records</h5>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+
+                    <thead class="table-light">
+                        <tr>
+                            <th>#</th>
+                            <th>Student Name</th>
+                            <th>Course</th>
+                            <th>Enrollment Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for enrollment in enrollments %}
+
+                        <tr>
+                            <td>{{ forloop.counter }}</td>
+
+                            <td class="fw-semibold">
+                                {{ enrollment.student.full_name }}
+                            </td>
+
+                            <td>
+                                {{ enrollment.course.title }}
+                            </td>
+
+                            <td>
+                                {{ enrollment.enrollment_date|date:"M d, Y" }}
+                            </td>
+
+                            <td>
+                                {% if enrollment.status == 'Active' %}
+                                    <span class="badge bg-success">
+                                        Active
+                                    </span>
+
+                                {% elif enrollment.status == 'Completed' %}
+                                    <span class="badge bg-primary">
+                                        Completed
+                                    </span>
+
+                                {% else %}
+                                    <span class="badge bg-secondary">
+                                        Dropped
+                                    </span>
+                                {% endif %}
+                            </td>
+                        </tr>
+
+                        {% empty %}
+
+                        <tr>
+                            <td colspan="5" class="text-center py-4 text-muted">
+                                <i class="bi bi-people fs-2 d-block mb-2"></i>
+                                No enrolled students found.
+                            </td>
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

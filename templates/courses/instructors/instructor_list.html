@@ -1,0 +1,80 @@
+
+{% extends 'courses/base.html' %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2>Instructor Management</h2>
+            <p class="text-muted">Manage all registered instructors</p>
+        </div>
+
+        <a href="{% url 'instructor_create' %}" class="btn btn-primary">
+            <i class="bi bi-plus-circle"></i> Add New Instructor
+        </a>
+    </div>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>Full Name</th>
+                            <th>Email</th>
+                            <th>Phone</th>
+                            <th>Specialization</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for instructor in instructors %}
+
+                        <tr>
+                            <td>{{ instructor.id }}</td>
+                            <td>{{ instructor.full_name }}</td>
+                            <td>{{ instructor.email }}</td>
+                            <td>{{ instructor.phone }}</td>
+                            <td>{{ instructor.specialization }}</td>
+
+                            <td>
+                                <a href="{% url 'instructor_update' instructor.id %}"
+                                   class="btn btn-sm btn-warning">
+                                    <i class="bi bi-pencil"></i> Edit
+                                </a>
+
+                                <a href="{% url 'instructor_delete' instructor.id %}"
+                                   class="btn btn-sm btn-danger">
+                                    <i class="bi bi-trash"></i> Delete
+                                </a>
+                            </td>
+                        </tr>
+
+                        {% empty %}
+
+                        <tr>
+                            <td colspan="6" class="text-center text-muted py-4">
+                                No instructors registered yet.
+                            </td>
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

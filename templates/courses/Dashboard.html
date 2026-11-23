@@ -1,0 +1,143 @@
+
+{% extends 'courses/base.html' %}
+
+{% block title %}Dashboard | Online Course Management{% endblock %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <div class="mb-4">
+        <h2 class="fw-bold">Dashboard</h2>
+        <p class="text-secondary">
+            Welcome to Online Course Management System
+        </p>
+    </div>
+
+    <!-- Dashboard Statistics -->
+    <div class="row g-4">
+
+        <!-- Students -->
+        <div class="col-md-6 col-lg-3">
+            <div class="card dashboard-card border-0 shadow-sm">
+                <div class="card-body">
+                    <i class="bi bi-people-fill fs-2 text-primary"></i>
+                    <h6 class="text-secondary mt-3">Total Students</h6>
+                    <h2 class="fw-bold">{{ total_students }}</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- Instructors -->
+        <div class="col-md-6 col-lg-3">
+            <div class="card dashboard-card border-0 shadow-sm">
+                <div class="card-body">
+                    <i class="bi bi-person-badge-fill fs-2 text-success"></i>
+                    <h6 class="text-secondary mt-3">Total Instructors</h6>
+                    <h2 class="fw-bold">{{ total_instructors }}</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- Courses -->
+        <div class="col-md-6 col-lg-3">
+            <div class="card dashboard-card border-0 shadow-sm">
+                <div class="card-body">
+                    <i class="bi bi-book-fill fs-2 text-warning"></i>
+                    <h6 class="text-secondary mt-3">Total Courses</h6>
+                    <h2 class="fw-bold">{{ total_courses }}</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- Enrollments -->
+        <div class="col-md-6 col-lg-3">
+            <div class="card dashboard-card border-0 shadow-sm">
+                <div class="card-body">
+                    <i class="bi bi-journal-check fs-2 text-danger"></i>
+                    <h6 class="text-secondary mt-3">Total Enrollments</h6>
+                    <h2 class="fw-bold">{{ total_enrollments }}</h2>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Recent Enrollments -->
+    <div class="card border-0 shadow-sm mt-4">
+
+        <div class="card-header bg-white py-3">
+            <h5 class="fw-bold mb-0">
+                <i class="bi bi-clock-history me-2"></i>
+                Recent Enrollments
+            </h5>
+        </div>
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Course</th>
+                            <th>Enrollment Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% for enrollment in recent_enrollments %}
+
+                        <tr>
+                            <td>
+                                {{ enrollment.student.full_name }}
+                            </td>
+
+                            <td>
+                                {{ enrollment.course.title }}
+                            </td>
+
+                            <td>
+                                {{ enrollment.enrollment_date }}
+                            </td>
+
+                            <td>
+                                {% if enrollment.status == 'Active' %}
+                                    <span class="badge bg-success">Active</span>
+
+                                {% elif enrollment.status == 'Completed' %}
+                                    <span class="badge bg-primary">Completed</span>
+
+                                {% elif enrollment.status == 'Dropped' %}
+                                    <span class="badge bg-danger">Dropped</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+
+                        {% empty %}
+
+                        <tr>
+                            <td colspan="4" class="text-center text-muted py-4">
+                                No enrollments available yet.
+                            </td>
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends 'courses/base.html' %}
+
+{% block content %}
+
+<div class="container-fluid">
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+
+            <h3>Delete Enrollment</h3>
+
+            <p>
+                Are you sure you want to delete the enrollment of
+                <strong>{{ enrollment.student.full_name }}</strong>
+                for
+                <strong>{{ enrollment.course.title }}</strong>?
+            </p>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <button type="submit" class="btn btn-danger">
+                    Yes, Delete
+                </button>
+
+                <a href="{% url 'enrollment_list' %}" class="btn btn-secondary">
+                    Cancel
+                </a>
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}
